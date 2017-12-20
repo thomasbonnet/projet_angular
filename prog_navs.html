@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html  lang="fr"  ng-app='ListNavApp'>
+<head>
+	<title></title>
+
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="bower_components/angular-ui-select/dist/select.css">
+</head>
+<body>
+	
+	<div class="container-fluid" ng-controller='displayList'>
+		<!-- <form name="myForm"> -->
+			<label for="repeatSelect"> Bateau: </label>
+			<select name="repeatSelect" id="repeatSelect" ng-model="liste_bateau.model">
+				<option ng-repeat="option in liste_bateau.availableOptions" value="{{option.id}}">{{option.name}}</option>
+			</select>
+			<!-- </form> -->
+			
+				<div  class="row well well-sm" style="height:200px" ng-repeat="nav in navs | filter: {idBateau : liste_bateau.model} | orderBy:'date_debut'">
+					
+					<span class="col-sm-2 align-middle" style="height:180px">du {{nav.date_debut | date : 'EEE d MMMM yyyy' }} </br> au {{nav.date_fin | date : 'EEE d MMMM yyyy' }}<span class="badge">6</span></span>
+					
+					<button class="col-sm-1 alert alert-success" style="height:180px" type="button" ng-repeat='inscr in inscriptions | filter:{idNav:nav.id}:true'>{{membres[inscr.idAdherent].prenomAdherent}} {{membres[inscr.idAdherent].nomAdherent}}</button>
+
+					<button class="col-sm-1 btn btn-success" style="height:180px" type="button">S'inscire</button>
+
+				</div>
+			
+
+
+  <div class="form-group">
+  	<label class="col-sm-3 control-label">With a clear button</label>
+  	<div class="col-sm-1">
+  		<div class="input-group">
+  			<ui-select  allow-clear ng-model='membre.selected' theme='bootstrap'>
+  				<ui-select-match placeholder="Saissisez un nom...">
+  					{{$select.selected.prenomAdherent + ' '+ $select.selected.nomAdherent}}
+  				</ui-select-match>
+  				<ui-select-choices repeat='m in membres | filter : $select.search'>
+  					<span ng-bind-html="(m.prenomAdherent +' ' + m.nomAdherent)| highlight: $select.search"></span>
+  					<small ng-bind-html="m.emailPriveAdherent | highlight: $select.search"></small>
+  				</ui-select-choices>
+  			</ui-select>
+  			<span class="input-group-btn">
+  				<button type="button" ng-click="ctrl.person.selected = undefined" class="btn btn-default">
+  					<span class="glyphicon glyphicon-trash"></span>
+  				</button>
+  			</span>
+  		</div>
+  	</div>
+  </div>
+
+
+</div>
+
+
+
+
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+
+<!-- angular js -->
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.min.js"></script>
+<script src="js/angular-sanitize.min.js"></script>
+<script type="text/javascript" src="bower_components/angular-ui-select/dist/select.js"></script>
+<script src="js/angular-locale_fr-fr.js"></script>
+<script type="text/javascript" src="js/ListApp.js"></script>
+</body>
+</html>
